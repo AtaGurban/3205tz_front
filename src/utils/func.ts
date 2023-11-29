@@ -2,7 +2,7 @@ type FormDataInput = {
   [key: string]: string | Date | number | File | Blob | null;
 };
 interface queryType {
-  [key: string]: string | number | Date;
+  [key: string]: string | number | Date | undefined;
 }
 
 export function objectToFormData(obj: FormDataInput): FormData {
@@ -32,7 +32,9 @@ export const buildQueryParams = (params:queryType) => {
   for (const key in params) {
     if (Object.prototype.hasOwnProperty.call(params, key)) {
       const value = params[key];
-      queryParams.push(`${key}=${encodeURIComponent(value.toString())}`);
+      if (value){
+        queryParams.push(`${key}=${encodeURIComponent(value.toString())}`);
+      }
     }
   }
 
